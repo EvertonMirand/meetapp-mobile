@@ -7,10 +7,16 @@
  */
 
 import React from 'react';
-import Background from './components/Background';
+import { StatusBar } from 'react-native';
+import App from './App';
 
-const App = () => {
-  return <Background />;
+const Index = () => {
+  return (
+    <>
+      <StatusBar barStyle="light-content" backgroundColor="#22202C" />
+      <App />
+    </>
+  );
 };
 
-export default App;
+export default Index;

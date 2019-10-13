@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* meetappmobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* meetappmobileTests.m */; };
 		0C970411A6EC0D7ED31D0862 /* libPods-meetappmobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43EC3307198C06B11E77351C /* libPods-meetappmobile.a */; };
