@@ -5,7 +5,7 @@ import { Container, TInput } from './styles';
 function Input({ style, ...rest }, ref) {
   return (
     <Container style={style}>
-      <TInput {...rest} />
+      <TInput {...rest} ref={ref} />
     </Container>
   );
 }
