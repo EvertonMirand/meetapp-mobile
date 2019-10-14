@@ -3,11 +3,13 @@ import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormInput } from './styles';
-import Button from '~/components/Button';
 import SignForm from '~/components/SignForm';
+import Button from '~/components/Button';
 
-export default function SignIn({ navigation }) {
+export default function SignUp({ navigation }) {
   const passwordRef = useRef();
+  const emailRef = useRef();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -15,9 +17,18 @@ export default function SignIn({ navigation }) {
 
   return (
     <SignForm
-      linkText="Criar conta grátis"
-      onPressLink={() => navigation.navigate('SignUp')}
+      linkText="Já tenho login"
+      onPressLink={() => navigation.navigate('SignIn')}
     >
+      <FormInput
+        autoCorrect={false}
+        autoCapitalize="none"
+        placeholder="Nome completo"
+        returnKeyType="next"
+        onSubmitEditing={() => emailRef.current.focus()}
+        value={name}
+        onChangeText={setName}
+      />
       <FormInput
         keyboardType="email-address"
         autoCorrect={false}
@@ -25,10 +36,10 @@ export default function SignIn({ navigation }) {
         placeholder="Digite seu e-mail"
         returnKeyType="next"
         onSubmitEditing={() => passwordRef.current.focus()}
+        ref={emailRef}
         value={email}
         onChangeText={setEmail}
       />
-
       <FormInput
         secureTextEntry
         placeholder="Sua senha secreta"
@@ -38,12 +49,12 @@ export default function SignIn({ navigation }) {
         value={password}
         onChangeText={setPassword}
       />
-      <Button onPress={handleSubmit}>Entrar</Button>
+      <Button onPress={handleSubmit}>Criar conta</Button>
     </SignForm>
   );
 }
 
-SignIn.propTypes = {
+SignUp.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,
