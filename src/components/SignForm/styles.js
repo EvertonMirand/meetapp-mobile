@@ -1,7 +1,7 @@
 import { Platform } from 'react-native';
 import styled from 'styled-components/native';
 
-import Input from '../Input';
+import Colors from '~/themes/Colors';
 
 export const Container = styled.KeyboardAvoidingView.attrs({
   enabled: Platform.OS === 'ios',
@@ -23,7 +23,7 @@ export const LinkButton = styled.TouchableOpacity`
 `;
 
 export const LinkText = styled.Text`
-  color: #fff;
+  color: ${Colors.defaultText};
   font-weight: bold;
   font-size: 16px;
 `;

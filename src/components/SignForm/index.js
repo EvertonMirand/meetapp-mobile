@@ -7,12 +7,13 @@ import Background from '~/components/Background';
 import logo from '~/assets/logo.png';
 
 import { Container, Form, LinkButton, LinkText } from './styles';
+import AppLogo from '../AppLogo';
 
 export default function SignForm({ linkText, onPressLink, children }) {
   return (
     <Background>
       <Container>
-        <Image source={logo} />
+        <AppLogo />
         <Form>{children}</Form>
 
         <LinkButton onPress={onPressLink}>
