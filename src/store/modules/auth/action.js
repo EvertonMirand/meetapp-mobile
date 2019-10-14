@@ -26,13 +26,14 @@ export function signInSucess(token, user) {
   };
 }
 
-export function signUpRequest(name, email, password) {
+export function signUpRequest(name, email, password, onSucess) {
   return {
     type: SIGN_UP_REQUEST,
     payload: {
       name,
       email,
       password,
+      onSucess,
     },
   };
 }

@@ -4,6 +4,7 @@ import {
   SIGN_IN_REQUEST,
   SIGN_FAILURE,
   SIGN_OUT,
+  SIGN_UP_SUCESS,
 } from './types';
 
 const INITIAL_STATE = {
@@ -21,12 +22,18 @@ export default function auth(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+
       case SIGN_IN_REQUEST: {
         draft.loading = true;
         break;
       }
+      case SIGN_UP_SUCESS: {
+        draft.loading = false;
+        break;
+      }
       case SIGN_FAILURE: {
         draft.loading = false;
+        draft.error = true;
         break;
       }
       case SIGN_OUT: {
