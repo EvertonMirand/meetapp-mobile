@@ -16,4 +16,5 @@ export default {
   opacityIcon: 'rgba(255, 255, 255, 0.6)',
   inactiveBottomTintColor: 'rgba(255, 255, 255, 0.6)',
   activeBottomTintColor: '#fff',
+  infoColor: '#999999',
 };
