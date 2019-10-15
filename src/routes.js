@@ -5,15 +5,30 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
+import Colors from './themes/Colors';
 
 const Sign = createSwitchNavigator({
   SignIn,
   SignUp,
 });
 
-const App = createBottomTabNavigator({
-  Dashboard,
-});
+const App = createBottomTabNavigator(
+  {
+    Dashboard,
+  },
+  {
+    resetOnBlur: true,
+
+    tabBarOptions: {
+      keyboardHidesTabBar: true,
+      activeTintColor: Colors.activeBottomTintColor,
+      inactiveTintColor: Colors.inactiveBottomTintColor,
+      style: {
+        backgroundColor: Colors.bootomBarBackground,
+      },
+    },
+  }
+);
 
 export default (isSigned = false) =>
   createAppContainer(
