@@ -10,9 +10,11 @@ import Header from '~/components/Header';
 
 import MeetUp from '~/components/MeetUp';
 import { loadMeetups } from '~/services/MeetUpAPI';
+import DatePage from '~/components/DatePage';
 
 function Dashboard({ isFocused }) {
   const [meetups, setMeetup] = useState([]);
+  const [date, setDate] = useState(new Date());
 
   useEffect(() => {
     const fetchMeetups = async () => {
@@ -28,12 +30,17 @@ function Dashboard({ isFocused }) {
   return (
     <Background>
       <Header />
+      <DatePage date={date} onChangeDate={setDate} />
       <Container>
         <List
           data={meetups}
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => (
-            <MeetUp buttonText="Realizar inscrição" item={item} />
+            <MeetUp
+              buttonText="Realizar inscrição"
+              item={item}
+              onPressButton={() => {}}
+            />
           )}
         />
       </Container>
