@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+import PropTypes from 'prop-types';
 import { withNavigationFocus } from 'react-navigation';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -8,20 +9,19 @@ import Background from '~/components/Background';
 import Header from '~/components/Header';
 
 import MeetUp from '~/components/MeetUp';
-import api from '~/services/api';
+import { loadMeetups } from '~/services/MeetUpAPI';
 
 function Dashboard({ isFocused }) {
   const [meetups, setMeetup] = useState([]);
 
   useEffect(() => {
-    async function loadMeetups() {
-      const response = (await api.get('meetups')) || [];
+    const fetchMeetups = async () => {
+      const data = await loadMeetups();
 
-      setMeetup(response.data);
-    }
-
+      setMeetup(data);
+    };
     if (isFocused) {
-      loadMeetups();
+      fetchMeetups();
     }
   }, [isFocused]);
 
@@ -46,6 +46,10 @@ Dashboard.navigationOptions = {
   tabBarIcon: ({ tintColor }) => (
     <Icon name="event" size={20} color={tintColor} />
   ),
+};
+
+Dashboard.propTypes = {
+  isFocused: PropTypes.bool.isRequired,
 };
 
 export default withNavigationFocus(Dashboard);
