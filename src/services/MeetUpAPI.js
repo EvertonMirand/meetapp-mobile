@@ -5,8 +5,14 @@ import api from './api';
 
 const isAndroid = Platform.OS === 'android';
 
-export async function loadMeetups() {
-  const response = (await api.get('meetups')) || [];
+export async function loadMeetups(dateParam, page) {
+  const response =
+    (await api.get('meetups', {
+      params: {
+        date: dateParam.toISOString(),
+        page,
+      },
+    })) || [];
 
   response.data.map(meetup => {
     const { File, date } = meetup;

@@ -13,19 +13,20 @@ import { loadMeetups } from '~/services/MeetUpAPI';
 import DatePage from '~/components/DatePage';
 
 function Dashboard({ isFocused }) {
+  const [page, setPage] = useState(1);
   const [meetups, setMeetup] = useState([]);
   const [date, setDate] = useState(new Date());
 
   useEffect(() => {
     const fetchMeetups = async () => {
-      const data = await loadMeetups();
+      const data = await loadMeetups(date, page);
 
       setMeetup(data);
     };
     if (isFocused) {
       fetchMeetups();
     }
-  }, [isFocused]);
+  }, [date, isFocused, page]);
 
   return (
     <Background>
