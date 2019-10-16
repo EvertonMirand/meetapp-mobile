@@ -18,6 +18,7 @@ export default function MeetUp({ item, buttonText, onPressButton }) {
           uri: url,
         }}
       />
+
       <InfoContent>
         <Title>{title}</Title>
         <InfoTextIcon iconName="event">{formattedDate}</InfoTextIcon>
