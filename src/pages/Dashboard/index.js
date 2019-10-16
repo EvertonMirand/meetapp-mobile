@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { withNavigationFocus } from 'react-navigation';
 
@@ -8,18 +8,33 @@ import Background from '~/components/Background';
 import Header from '~/components/Header';
 
 import MeetUp from '~/components/MeetUp';
-
-const meetapp = [1, 2, 3, 4, 5];
+import api from '~/services/api';
 
 function Dashboard({ isFocused }) {
+  const [meetups, setMeetup] = useState([]);
+
+  useEffect(() => {
+    async function loadMeetups() {
+      const response = (await api.get('meetups')) || [];
+
+      setMeetup(response.data);
+    }
+
+    if (isFocused) {
+      loadMeetups();
+    }
+  }, [isFocused]);
+
   return (
     <Background>
       <Header />
       <Container>
         <List
-          data={meetapp}
-          keyExtractor={item => String(item)}
-          renderItem={item => <MeetUp />}
+          data={meetups}
+          keyExtractor={item => String(item.id)}
+          renderItem={({ item }) => (
+            <MeetUp buttonText="Realizar inscrição" item={item} />
+          )}
         />
       </Container>
     </Background>

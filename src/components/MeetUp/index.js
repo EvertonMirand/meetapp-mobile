@@ -5,6 +5,9 @@ import InfoTextIcon from '../InfoTextIcon';
 import Button from '../Button';
 
 export default function MeetUp({ item, buttonText, onPressButton }) {
+  const { title, date, location, User } = item;
+  const { name } = User;
+
   return (
     <Content>
       <Banner
@@ -14,12 +17,12 @@ export default function MeetUp({ item, buttonText, onPressButton }) {
         }}
       />
       <InfoContent>
-        <Title>Meetup de React Native</Title>
-        <InfoTextIcon iconName="event">24 de Junho, às 20h</InfoTextIcon>
+        <Title>{title}</Title>
+        <InfoTextIcon iconName="event">{date}</InfoTextIcon>
 
-        <InfoTextIcon iconName="place">Rua Guilherme Gembal</InfoTextIcon>
+        <InfoTextIcon iconName="place">{location}</InfoTextIcon>
 
-        <InfoTextIcon iconName="person">Organizador: Diego F</InfoTextIcon>
+        <InfoTextIcon iconName="person">Organizador: {name}</InfoTextIcon>
 
         <Button onPress={onPressButton}>{buttonText}</Button>
       </InfoContent>
