@@ -1,24 +1,26 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 import { Content, Banner, InfoContent, Title } from './styles';
 import InfoTextIcon from '../InfoTextIcon';
 import Button from '../Button';
 
 export default function MeetUp({ item, buttonText, onPressButton }) {
-  const { title, date, location, User } = item;
+  const { title, formattedDate, location, User, File } = item;
+  const { url } = File;
   const { name } = User;
 
   return (
     <Content>
       <Banner
         source={{
-          uri:
-            'https://help.meetup.com/hc/article_attachments/360003122731/1_IEWB6sdRfc_gCwtSwwBT5Q.jpeg',
+          uri: url,
         }}
       />
       <InfoContent>
         <Title>{title}</Title>
-        <InfoTextIcon iconName="event">{date}</InfoTextIcon>
+        <InfoTextIcon iconName="event">{formattedDate}</InfoTextIcon>
 
         <InfoTextIcon iconName="place">{location}</InfoTextIcon>
 
@@ -29,3 +31,19 @@ export default function MeetUp({ item, buttonText, onPressButton }) {
     </Content>
   );
 }
+
+MeetUp.propTypes = {
+  buttonText: PropTypes.string.isRequired,
+  onPressButton: PropTypes.func.isRequired,
+  item: PropTypes.shape({
+    title: PropTypes.string,
+    formattedDate: PropTypes.string,
+    location: PropTypes.string,
+    User: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+    File: PropTypes.shape({
+      url: PropTypes.string,
+    }),
+  }).isRequired,
+};
