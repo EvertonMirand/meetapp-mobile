@@ -19,5 +19,8 @@ export default function InfoTextIcon({ iconName, children }) {
 
 InfoTextIcon.propTypes = {
   iconName: PropTypes.string.isRequired,
-  children: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]).isRequired,
 };
