@@ -5,6 +5,16 @@ import api from './api';
 
 const isAndroid = Platform.OS === 'android';
 
+function dateFormatted(date) {
+  return format(parseISO(date), "dd 'de' MMMM 'às' HH'h'", {
+    locale: pt,
+  });
+}
+
+function androidUrlReplace(url) {
+  return url.replace('localhost', '10.0.0.100');
+}
+
 export async function loadMeetups(dateParam, page) {
   const response =
     (await api.get('meetups', {
@@ -18,41 +28,35 @@ export async function loadMeetups(dateParam, page) {
     const { File, date } = meetup;
     if (isAndroid) {
       if (File) {
-        meetup.File.url = File.url.replace('localhost', '10.0.0.100');
+        meetup.File.url = androidUrlReplace(File.url);
       }
     }
 
-    meetup.formattedDate = format(parseISO(date), "dd 'de' MMMM 'às' HH'h'", {
-      locale: pt,
-    });
+    meetup.formattedDate = dateFormatted(date);
   });
 
-  return response.data;
+  return response;
 }
 
-export async function loadSubscriptions() {
-  const response = (await api.get('subscriptions')) || [];
+export async function loadSubscriptions(page) {
+  const response =
+    (await api.get('subscriptions', {
+      params: {
+        page,
+      },
+    })) || [];
   console.tron.log(response);
 
   response.data.map(subscription => {
     const { File, date } = subscription.Meetup;
     if (isAndroid) {
       if (File) {
-        subscription.Meetup.File.url = File.url.replace(
-          'localhost',
-          '10.0.0.100'
-        );
+        subscription.Meetup.File.url = androidUrlReplace(File.url);
       }
     }
 
-    subscription.Meetup.formattedDate = format(
-      parseISO(date),
-      "dd 'de' MMMM 'às' HH'h'",
-      {
-        locale: pt,
-      }
-    );
+    subscription.Meetup.formattedDate = dateFormatted(date);
   });
 
-  return response.data;
+  return response;
 }
