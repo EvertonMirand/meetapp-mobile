@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
+import Subscriptions from './pages/Subscriptions';
 import Colors from './themes/Colors';
 
 const Sign = createSwitchNavigator({
@@ -15,6 +16,7 @@ const Sign = createSwitchNavigator({
 const App = createBottomTabNavigator(
   {
     Dashboard,
+    Subscriptions,
   },
   {
     resetOnBlur: true,
