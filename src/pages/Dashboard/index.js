@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 import { withNavigationFocus } from 'react-navigation';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Container, List } from './styles';
@@ -9,10 +10,14 @@ import Background from '~/components/Background';
 import Header from '~/components/Header';
 
 import MeetUp from '~/components/MeetUp';
+import PageSelect from '~/components/PageSelect';
 import { loadMeetups } from '~/services/MeetUpAPI';
 import DatePage from '~/components/DatePage';
+import { subscribeRequest } from '~/store/modules/meetup/actions';
 
 function Dashboard({ isFocused }) {
+  const dispatch = useDispatch();
+
   const [page, setPage] = useState(1);
   const [meetups, setMeetup] = useState([]);
   const [date, setDate] = useState(new Date());
@@ -28,6 +33,10 @@ function Dashboard({ isFocused }) {
     }
   }, [date, isFocused, page]);
 
+  function subscribeToMeetup(id) {
+    dispatch(subscribeRequest(id));
+  }
+
   return (
     <Background>
       <Header />
@@ -40,11 +49,19 @@ function Dashboard({ isFocused }) {
             <MeetUp
               buttonText="Realizar inscrição"
               item={item}
-              onPressButton={() => {}}
+              onPressButton={() => {
+                subscribeToMeetup(item.id);
+              }}
             />
           )}
         />
       </Container>
+      <PageSelect
+        page={page}
+        onChangePage={setPage}
+        disabledLeft={page === 1}
+        disabledRight={meetups.length < 10}
+      />
     </Background>
   );
 }
