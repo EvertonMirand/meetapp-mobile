@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 import { withNavigationFocus } from 'react-navigation';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Container, List } from './styles';
@@ -11,22 +11,53 @@ import Header from '~/components/Header';
 
 import MeetUp from '~/components/MeetUp';
 import { loadSubscriptions } from '~/services/MeetUpAPI';
+import FooterIndicator from '~/components/FooterIndicator';
 
 function Subscriptions({ isFocused }) {
   const dispatch = useDispatch();
 
-  const [subscription, setSubscription] = useState([]);
+  const [subscription, setSubscription] = useState();
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [refreshing, setRefresh] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  async function getResponse(pageNumber) {
+    setLoading(true);
+    return loadSubscriptions(pageNumber).then(response => {
+      setLoading(false);
+      return response;
+    });
+  }
+
+  function generateTotalPage(response) {
+    setTotalPages(response.headers['x-total-page'] || 0);
+  }
+
+  const fetchSubscriptions = async (pageNumber = page, sholdRefresh) => {
+    if (totalPages && pageNumber > totalPages) return;
+    const response = await getResponse(pageNumber);
+
+    const { data } = response;
+
+    generateTotalPage(response);
+
+    if (data.length > 0) {
+      setSubscription(sholdRefresh ? data : [...subscription, ...data]);
+      setPage(pageNumber + 1);
+    }
+  };
 
   useEffect(() => {
-    const fetchMeetups = async () => {
-      const data = await loadSubscriptions();
-      console.tron.log(data);
-      setSubscription(data);
-    };
     if (isFocused) {
-      fetchMeetups();
+      setSubscription([]);
+      fetchSubscriptions(1, true);
     }
-  }, [isFocused]);
+  }, [isFocused]); // eslint-disable-line
+
+  function onEndReached() {
+    fetchSubscriptions();
+  }
 
   function unsubscribeToMeetup(id) {
     // dispatch(subscribeRequest(id));
@@ -39,6 +70,9 @@ function Subscriptions({ isFocused }) {
         <List
           data={subscription}
           keyExtractor={item => String(item.id)}
+          onEndReachedThreshold={0.1}
+          onEndReached={onEndReached}
+          ListFooterComponent={loading && <FooterIndicator />}
           renderItem={({ item }) => (
             <MeetUp
               buttonText="Cancelar inscrição"
