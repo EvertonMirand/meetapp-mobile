@@ -5,7 +5,7 @@ import { withNavigationFocus } from 'react-navigation';
 import { useDispatch } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Container, List } from './styles';
+import { Container, List, NoMeetup } from './styles';
 import Background from '~/components/Background';
 import Header from '~/components/Header';
 
@@ -84,6 +84,12 @@ function Dashboard({ isFocused }) {
           refreshing={refreshing}
           onEndReachedThreshold={0.1}
           ListFooterComponent={loading && <FooterIndicator />}
+          ListEmptyComponent={
+            !loading &&
+            !refreshing && (
+              <NoMeetup>Sem meetups encontradas nesse dia</NoMeetup>
+            )
+          }
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => (
             <MeetUp

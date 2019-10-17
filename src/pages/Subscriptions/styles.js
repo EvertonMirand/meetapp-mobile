@@ -12,6 +12,12 @@ export const List = styled.FlatList.attrs({
   },
 })``;
 
+export const NoSubscription = styled.Text`
+  font-weight: bold;
+  color: ${Colors.defaultText};
+  font-size: 20px;
+`;
+
 export const Content = styled.View`
   background: #fff;
   border-radius: 4px;

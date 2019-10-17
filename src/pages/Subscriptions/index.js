@@ -5,7 +5,7 @@ import { withNavigationFocus } from 'react-navigation';
 import { useDispatch } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Container, List } from './styles';
+import { Container, List, NoSubscription } from './styles';
 import Background from '~/components/Background';
 import Header from '~/components/Header';
 
@@ -73,6 +73,12 @@ function Subscriptions({ isFocused }) {
           onEndReachedThreshold={0.1}
           onEndReached={onEndReached}
           ListFooterComponent={loading && <FooterIndicator />}
+          ListEmptyComponent={
+            !loading &&
+            !refreshing && (
+              <NoSubscription>Sem Inscrições cadastradas</NoSubscription>
+            )
+          }
           renderItem={({ item }) => (
             <MeetUp
               buttonText="Cancelar inscrição"
