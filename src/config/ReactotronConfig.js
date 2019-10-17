@@ -7,7 +7,7 @@ if (__DEV__) {
   const configure =
     Platform.OS === 'android'
       ? {
-          host: '10.0.0.100',
+          host: '172.18.108.40',
         }
       : undefined;
   const tron = Reactotron.configure(configure)

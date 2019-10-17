@@ -5,21 +5,6 @@ import api from './api';
 
 const isAndroid = Platform.OS === 'android';
 
-function formatListMeetUps(response) {
-  response.data.map(meetup => {
-    const { File, date } = meetup;
-    if (isAndroid) {
-      if (File) {
-        meetup.File.url = File.url.replace('localhost', '10.0.0.100');
-      }
-    }
-
-    meetup.formattedDate = format(parseISO(date), "dd 'de' MMMM 'às' HH'h'", {
-      locale: pt,
-    });
-  });
-}
-
 export async function loadMeetups(dateParam, page) {
   const response =
     (await api.get('meetups', {
@@ -47,6 +32,7 @@ export async function loadMeetups(dateParam, page) {
 
 export async function loadSubscriptions() {
   const response = (await api.get('subscriptions')) || [];
+  console.tron.log(response);
 
   response.data.map(subscription => {
     const { File, date } = subscription.Meetup;
