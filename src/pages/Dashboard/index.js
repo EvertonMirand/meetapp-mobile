@@ -10,7 +10,7 @@ import Background from '~/components/Background';
 import Header from '~/components/Header';
 
 import MeetUp from '~/components/MeetUp';
-import { loadMeetups } from '~/services/MeetUpAPI';
+import { loadMeetups } from '~/services/MeetupAPI';
 import DatePage from '~/components/DatePage';
 import { subscribeRequest } from '~/store/modules/meetup/actions';
 import FooterIndicator from '~/components/FooterIndicator';
@@ -45,14 +45,14 @@ function Dashboard({ isFocused }) {
 
     generateTotalPage(response);
 
-    if (data.length > 0) {
-      setMeetup(shouldRefresh ? data : [...meetups, ...data]);
-      setPage(pageNumber + 1);
-    }
+    setMeetup(shouldRefresh ? data : [...meetups, ...data]);
+    setPage(pageNumber + 1);
   }
 
   useEffect(() => {
     if (isFocused) {
+      setPage(1);
+      setTotalPages(0);
       setMeetup([]);
       fetchMeetups(1, true);
     }
@@ -62,8 +62,8 @@ function Dashboard({ isFocused }) {
     dispatch(subscribeRequest(id));
   }
 
-  function onEndReached() {
-    fetchMeetups();
+  async function onEndReached() {
+    await fetchMeetups();
   }
 
   async function onRefresh() {

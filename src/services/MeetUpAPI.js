@@ -12,7 +12,7 @@ function dateFormatted(date) {
 }
 
 function androidUrlReplace(url) {
-  return url.replace('localhost', '10.0.0.100');
+  return url.replace('localhost', '172.18.108.40');
 }
 
 export async function loadMeetups(dateParam, page) {
@@ -45,7 +45,6 @@ export async function loadSubscriptions(page) {
         page,
       },
     })) || [];
-  console.tron.log(response);
 
   response.data.map(subscription => {
     const { File, date } = subscription.Meetup;

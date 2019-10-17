@@ -10,7 +10,7 @@ import Background from '~/components/Background';
 import Header from '~/components/Header';
 
 import MeetUp from '~/components/MeetUp';
-import { loadSubscriptions } from '~/services/MeetUpAPI';
+import { loadSubscriptions } from '~/services/MeetupAPI';
 import FooterIndicator from '~/components/FooterIndicator';
 
 function Subscriptions({ isFocused }) {
@@ -55,8 +55,14 @@ function Subscriptions({ isFocused }) {
     }
   }, [isFocused]); // eslint-disable-line
 
-  function onEndReached() {
-    fetchSubscriptions();
+  async function onEndReached() {
+    await fetchSubscriptions();
+  }
+
+  async function onRefresh() {
+    setRefresh(true);
+    await fetchSubscriptions(1, true);
+    setRefresh(false);
   }
 
   function unsubscribeToMeetup(id) {
@@ -70,6 +76,8 @@ function Subscriptions({ isFocused }) {
         <List
           data={subscription}
           keyExtractor={item => String(item.id)}
+          onRefresh={onRefresh}
+          refreshing={refreshing}
           onEndReachedThreshold={0.1}
           onEndReached={onEndReached}
           ListFooterComponent={loading && <FooterIndicator />}
