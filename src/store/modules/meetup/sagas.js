@@ -9,7 +9,7 @@ export function* subscribeToMeetup({ payload }) {
     const { id } = payload;
     yield call(api.post, `meetups/${id}/subscriptions`);
 
-    Alert.alert('Inscrito!', 'Você se inscrvel no MeetUp com sucesso');
+    Alert.alert('Inscrito!', 'Você se inscrevel no MeetUp com sucesso');
 
     yield put(subscribeSuccess());
   } catch (err) {
