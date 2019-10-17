@@ -14,6 +14,7 @@ import MeetUp from '~/components/MeetUp';
 import { loadMeetups } from '~/services/MeetUpAPI';
 import DatePage from '~/components/DatePage';
 import { subscribeRequest } from '~/store/modules/meetup/actions';
+import Colors from '~/themes/Colors';
 
 function Dashboard({ isFocused }) {
   const dispatch = useDispatch();
@@ -66,7 +67,9 @@ function Dashboard({ isFocused }) {
           onRefresh={onRefresh}
           refreshing={refreshing}
           onEndReachedThreshold={0.1}
-          ListFooterComponent={loading && <ActivityIndicator />}
+          ListFooterComponent={
+            loading && <ActivityIndicator color={Colors.defaultIcon} />
+          }
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => (
             <MeetUp
