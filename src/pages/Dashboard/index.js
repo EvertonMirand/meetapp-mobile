@@ -18,17 +18,34 @@ import Colors from '~/themes/Colors';
 
 function Dashboard({ isFocused }) {
   const dispatch = useDispatch();
-
+  const [totalPages, setTotalPages] = useState(0);
   const [page, setPage] = useState(1);
   const [meetups, setMeetup] = useState([]);
   const [date, setDate] = useState(new Date());
   const [refreshing, setRefresh] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  async function fetchMeetups(pageNumber = page, shouldRefresh = false) {
+  async function getResponse(pageNumber) {
     setLoading(true);
-    const data = await loadMeetups(date, pageNumber);
-    setLoading(false);
+    return loadMeetups(date, pageNumber).then(response => {
+      setLoading(false);
+      return response;
+    });
+  }
+
+  function generateTotalPage(response) {
+    setTotalPages(response.headers['x-total-page'] || 0);
+  }
+
+  async function fetchMeetups(pageNumber = page, shouldRefresh = false) {
+    if (totalPages && pageNumber > totalPages) return;
+
+    const response = await getResponse(pageNumber);
+
+    const { data } = response;
+
+    generateTotalPage(response);
+
     if (data.length > 0) {
       setMeetup(shouldRefresh ? data : [...meetups, ...data]);
       setPage(pageNumber + 1);
@@ -40,7 +57,7 @@ function Dashboard({ isFocused }) {
       setMeetup([]);
       fetchMeetups(1, true);
     }
-  }, [date, isFocused]); // eslint-disable-line
+  }, [date]); // eslint-disable-line
 
   function subscribeToMeetup(id) {
     dispatch(subscribeRequest(id));
