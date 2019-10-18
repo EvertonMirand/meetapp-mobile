@@ -37,7 +37,6 @@ function Dashboard({ isFocused }) {
   }
 
   async function fetchMeetups(pageNumber = page, shouldRefresh = false) {
-    console.tron.log(totalPages);
     if (totalPages !== 0 && pageNumber > totalPages) return;
 
     const response = await getResponse(pageNumber);
@@ -54,13 +53,11 @@ function Dashboard({ isFocused }) {
     async function whenDateChange() {
       if (isFocused) {
         setRefresh(true);
-
         setMeetup([]);
         await fetchMeetups(1, true);
         setRefresh(false);
       }
     }
-
     whenDateChange();
   }, [date, isFocused]); // eslint-disable-line
 
