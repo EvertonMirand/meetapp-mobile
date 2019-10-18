@@ -17,4 +17,5 @@ export default {
   inactiveBottomTintColor: 'rgba(255, 255, 255, 0.6)',
   activeBottomTintColor: '#fff',
   infoColor: '#999999',
+  separator: 'rgba(255, 255, 255, 0.2)',
 };
