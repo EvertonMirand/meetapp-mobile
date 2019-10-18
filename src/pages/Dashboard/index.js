@@ -37,7 +37,8 @@ function Dashboard({ isFocused }) {
   }
 
   async function fetchMeetups(pageNumber = page, shouldRefresh = false) {
-    if (totalPages && pageNumber > totalPages) return;
+    console.tron.log(totalPages);
+    if (totalPages !== 0 && pageNumber > totalPages) return;
 
     const response = await getResponse(pageNumber);
 
@@ -50,13 +51,18 @@ function Dashboard({ isFocused }) {
   }
 
   useEffect(() => {
-    if (isFocused) {
-      setPage(1);
-      setTotalPages(0);
-      setMeetup([]);
-      fetchMeetups(1, true);
+    async function whenDateChange() {
+      if (isFocused) {
+        setRefresh(true);
+
+        setMeetup([]);
+        await fetchMeetups(1, true);
+        setRefresh(false);
+      }
     }
-  }, [date]); // eslint-disable-line
+
+    whenDateChange();
+  }, [date, isFocused]); // eslint-disable-line
 
   function subscribeToMeetup(id) {
     dispatch(subscribeRequest(id));
@@ -72,10 +78,15 @@ function Dashboard({ isFocused }) {
     setRefresh(false);
   }
 
+  function onChangeDate(dateChanged) {
+    setTotalPages(0);
+    setDate(dateChanged);
+  }
+
   return (
     <Background>
       <Header />
-      <DatePage date={date} onChangeDate={setDate} />
+      <DatePage date={date} onChangeDate={onChangeDate} />
       <Container>
         <List
           data={meetups}
