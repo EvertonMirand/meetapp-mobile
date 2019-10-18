@@ -13,6 +13,7 @@ import MeetUp from '~/components/MeetUp';
 import { loadSubscriptions } from '~/services/MeetupAPI';
 import FooterIndicator from '~/components/FooterIndicator';
 import { unsubscribeRequest } from '~/store/modules/meetup/actions';
+import meetup from '~/store/modules/meetup/reducer';
 
 function Subscriptions({ isFocused }) {
   const dispatch = useDispatch();
@@ -68,6 +69,12 @@ function Subscriptions({ isFocused }) {
 
   function unsubscribeToMeetup(id) {
     dispatch(unsubscribeRequest(id));
+
+    const updatedSubscriptions = subscription.filter(sub => {
+      return sub.id !== id;
+    });
+
+    setSubscription(updatedSubscriptions);
   }
 
   return (
