@@ -18,10 +18,7 @@ export function* signIn({ payload }) {
 
     yield put(signInSucess(token, user));
   } catch (err) {
-    Alert.alert(
-      'Falha na autentificação',
-      'Houve um erro no login verifique os seus dados'
-    );
+    Alert.alert('Falha na autentificação', err.response.data.error);
 
     yield put(signFailure());
   }
@@ -38,10 +35,7 @@ export function* signUp({ payload }) {
     Alert.alert('Sucesso', 'Dados cadastrados com sucesso');
     onSucess();
   } catch (err) {
-    Alert.alert(
-      'Falha no cadastro',
-      'Houve um erro no cadastro verifique os seus dados'
-    );
+    Alert.alert('Falha no cadastro', err.response.data.error);
 
     yield put(signFailure());
   }

@@ -12,6 +12,7 @@ import Header from '~/components/Header';
 import MeetUp from '~/components/MeetUp';
 import { loadSubscriptions } from '~/services/MeetupAPI';
 import FooterIndicator from '~/components/FooterIndicator';
+import { unsubscribeRequest } from '~/store/modules/meetup/actions';
 
 function Subscriptions({ isFocused }) {
   const dispatch = useDispatch();
@@ -66,7 +67,7 @@ function Subscriptions({ isFocused }) {
   }
 
   function unsubscribeToMeetup(id) {
-    // dispatch(subscribeRequest(id));
+    dispatch(unsubscribeRequest(id));
   }
 
   return (
