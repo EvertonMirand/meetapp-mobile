@@ -14,7 +14,7 @@ export default function user(state = INITIAL_STATE, action) {
         break;
       }
       case UPDATE_PROFILE_SUCCESS: {
-        draft.profile = action.payload.user;
+        draft.profile = action.payload.profile;
         break;
       }
       case SIGN_OUT: {

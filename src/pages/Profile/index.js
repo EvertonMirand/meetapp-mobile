@@ -1,8 +1,6 @@
 import React, { useRef, useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { withNavigationFocus } from 'react-navigation';
 
 import {
   Container,
@@ -14,13 +12,15 @@ import {
 } from './styles';
 import Background from '~/components/Background';
 import Header from '~/components/Header';
-import Button from '~/components/Button';
 import { signOut } from '~/store/modules/auth/action';
+import { updateProfileRequest } from '~/store/modules/user/actions';
 
-function Profile({ isFocused }) {
+export default function Profile() {
   const dispatch = useDispatch();
 
-  const user = useSelector(state => state.user.profile);
+  const user = useSelector(state => {
+    return state.user.profile;
+  });
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
 
@@ -35,6 +35,21 @@ function Profile({ isFocused }) {
 
   function handleSignOut() {
     dispatch(signOut());
+  }
+
+  function handleUpdateProfile() {
+    const data = {
+      name,
+      email,
+      oldPassword,
+      password,
+      confirmPassword,
+    };
+
+    setOldPassword('');
+    setPassword('');
+    setConfirmPassword('');
+    dispatch(updateProfileRequest(data));
   }
 
   return (
@@ -93,12 +108,14 @@ function Profile({ isFocused }) {
             secureTextEntry
             placeholder="Confirmação de senha"
             returnKeyType="send"
-            // onSubmitEditing={() => {}}
+            onSubmitEditing={handleUpdateProfile}
             ref={confirmPasswordRef}
             value={confirmPassword}
             onChangeText={setConfirmPassword}
           />
-          <UpdateButton>Salvar perfil</UpdateButton>
+          <UpdateButton onPress={handleUpdateProfile}>
+            Salvar perfil
+          </UpdateButton>
           <LogOutButton darker onPress={handleSignOut}>
             Sair do Meetapp
           </LogOutButton>
@@ -114,9 +131,3 @@ Profile.navigationOptions = {
     <Icon name="person" size={20} color={tintColor} />
   ),
 };
-
-Profile.propTypes = {
-  isFocused: PropTypes.bool.isRequired,
-};
-
-export default withNavigationFocus(Profile);
