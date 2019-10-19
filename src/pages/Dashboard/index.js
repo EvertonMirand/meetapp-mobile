@@ -101,6 +101,7 @@ function Dashboard({ isFocused }) {
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => (
             <MeetUp
+              subscribe
               buttonText="Realizar inscrição"
               item={item}
               onPressButton={() => {

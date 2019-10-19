@@ -6,8 +6,8 @@ import { Content, Banner, InfoContent, Title } from './styles';
 import InfoTextIcon from '../InfoTextIcon';
 import Button from '../Button';
 
-export default function MeetUp({ item, buttonText, onPressButton }) {
-  const { title, formattedDate, location, User, File } = item;
+export default function MeetUp({ item, buttonText, onPressButton, subscribe }) {
+  const { title, formattedDate, location, User, File, canSubscribe } = item;
   const { url } = File;
   const { name } = User;
 
@@ -27,19 +27,23 @@ export default function MeetUp({ item, buttonText, onPressButton }) {
 
         <InfoTextIcon iconName="person">Organizador: {name}</InfoTextIcon>
 
-        <Button onPress={onPressButton}>{buttonText}</Button>
+        {(!subscribe || canSubscribe) && (
+          <Button onPress={onPressButton}>{buttonText}</Button>
+        )}
       </InfoContent>
     </Content>
   );
 }
 
 MeetUp.propTypes = {
+  subscribe: PropTypes.bool,
   buttonText: PropTypes.string.isRequired,
   onPressButton: PropTypes.func.isRequired,
   item: PropTypes.shape({
     title: PropTypes.string,
     formattedDate: PropTypes.string,
     location: PropTypes.string,
+    canSubscribe: PropTypes.bool,
     User: PropTypes.shape({
       name: PropTypes.string,
     }),
@@ -47,4 +51,8 @@ MeetUp.propTypes = {
       url: PropTypes.string,
     }),
   }).isRequired,
+};
+
+MeetUp.defaultProps = {
+  subscribe: false,
 };
