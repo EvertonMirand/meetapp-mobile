@@ -12,7 +12,7 @@ function dateFormatted(date) {
 }
 
 function androidUrlReplace(url) {
-  return url.replace('localhost', '172.18.108.40');
+  return url.replace('localhost', '10.0.0.100');
 }
 
 export async function loadMeetups(dateParam, page) {
