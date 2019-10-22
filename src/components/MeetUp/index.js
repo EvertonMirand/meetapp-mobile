@@ -22,6 +22,7 @@ export default function MeetUp({ item, buttonText, onPressButton, subscribe }) {
   return (
     <Content>
       <Banner
+        resizeMode="cover"
         source={{
           uri: url,
         }}

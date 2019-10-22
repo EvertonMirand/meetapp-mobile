@@ -14,6 +14,8 @@ export const InfoContent = styled.View`
 `;
 
 export const Banner = styled.Image`
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
   width: 100%;
   height: 150px;
 `;
