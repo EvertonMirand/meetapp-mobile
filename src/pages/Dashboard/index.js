@@ -49,21 +49,18 @@ function Dashboard({ isFocused }) {
     setPage(pageNumber + 1);
   }
 
-  useEffect(() => {
-    async function whenDateChange() {
-      if (isFocused) {
-        setRefresh(true);
-        setMeetup([]);
-        await fetchMeetups(1, true);
-        setRefresh(false);
-      }
+  async function whenDateChange() {
+    if (isFocused) {
+      setRefresh(true);
+      setMeetup([]);
+      await fetchMeetups(1, true);
+      setRefresh(false);
     }
+  }
+
+  useEffect(() => {
     whenDateChange();
   }, [date, isFocused]); // eslint-disable-line
-
-  function subscribeToMeetup(id) {
-    dispatch(subscribeRequest(id));
-  }
 
   async function onEndReached() {
     await fetchMeetups();
@@ -73,6 +70,11 @@ function Dashboard({ isFocused }) {
     setRefresh(true);
     await fetchMeetups(1, true);
     setRefresh(false);
+  }
+
+  async function subscribeToMeetup(id) {
+    await dispatch(subscribeRequest(id));
+    await whenDateChange();
   }
 
   function onChangeDate(dateChanged) {
