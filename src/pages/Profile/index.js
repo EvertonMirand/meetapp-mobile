@@ -10,7 +10,6 @@ import {
   LogOutButton,
   UpdateButton,
 } from './styles';
-import Background from '~/components/Background';
 import Header from '~/components/Header';
 import { signOut } from '~/store/modules/auth/action';
 import { updateProfileRequest } from '~/store/modules/user/actions';
