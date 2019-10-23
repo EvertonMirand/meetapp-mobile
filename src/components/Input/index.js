@@ -5,7 +5,7 @@ import { Container, TInput } from './styles';
 function Input({ style, ...rest }, ref) {
   return (
     <Container style={style}>
-      <TInput {...rest} ref={ref} resetOnBlur={false} />
+      <TInput {...rest} ref={ref} resetOnBlur={false} blurOnSubmit={false} />
     </Container>
   );
 }

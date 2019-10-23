@@ -85,10 +85,7 @@ export default function Profile() {
             secureTextEntry
             placeholder="Senha atual"
             returnKeyType="next"
-            onSubmitEditing={() => {
-              passwordRef.current.focus();
-              passwordRef.current.blur();
-            }}
+            onSubmitEditing={() => passwordRef.current.focus()}
             ref={oldPasswordRef}
             value={oldPassword}
             onChangeText={setOldPassword}
