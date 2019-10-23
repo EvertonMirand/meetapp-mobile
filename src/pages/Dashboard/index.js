@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Container, List, NoMeetup } from './styles';
-import Background from '~/components/Background';
 import Header from '~/components/Header';
 
 import MeetUp from '~/components/MeetUp';

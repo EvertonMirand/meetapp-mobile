@@ -20,7 +20,7 @@ export default function MeetUp({ item, buttonText, onPressButton, subscribe }) {
   const { name } = User;
 
   function canRenderButton() {
-    return (!subscribe && !past) || canSubscribe;
+    return (!past && canSubscribe) || !subscribe;
   }
 
   return (
