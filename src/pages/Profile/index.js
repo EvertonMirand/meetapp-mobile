@@ -85,7 +85,6 @@ export default function Profile() {
         validUpdateProfileData(data);
       })
       .catch(err => {
-        console.tron.log(err);
         showMessage({
           message: 'Dados invalidos!',
           description: err.message,
