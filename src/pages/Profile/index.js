@@ -53,7 +53,7 @@ export default function Profile() {
   }
 
   return (
-    <Background>
+    <>
       <Header />
       <Container>
         <Form>
@@ -121,7 +121,7 @@ export default function Profile() {
           </LogOutButton>
         </Form>
       </Container>
-    </Background>
+    </>
   );
 }
 

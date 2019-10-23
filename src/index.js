@@ -25,6 +25,7 @@ const Index = () => {
           barStyle="light-content"
           backgroundColor={Colors.backgroundPrimary}
         />
+
         <App />
       </PersistGate>
     </Provider>

@@ -83,7 +83,7 @@ function Dashboard({ isFocused }) {
   }
 
   return (
-    <Background>
+    <>
       <Header />
       <DatePage date={date} onChangeDate={onChangeDate} />
       <Container>
@@ -113,7 +113,7 @@ function Dashboard({ isFocused }) {
           )}
         />
       </Container>
-    </Background>
+    </>
   );
 }
 

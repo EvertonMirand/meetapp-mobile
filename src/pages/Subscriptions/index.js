@@ -77,7 +77,7 @@ function Subscriptions({ isFocused }) {
   }
 
   return (
-    <Background>
+    <>
       <Header />
       <Container>
         <List
@@ -105,7 +105,7 @@ function Subscriptions({ isFocused }) {
           )}
         />
       </Container>
-    </Background>
+    </>
   );
 }
 

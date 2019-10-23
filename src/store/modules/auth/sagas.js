@@ -1,4 +1,4 @@
-import { Alert } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 import { REHYDRATE } from 'redux-persist/es/constants';
 import api from '~/services/api';
@@ -18,7 +18,11 @@ export function* signIn({ payload }) {
 
     yield put(signInSucess(token, user));
   } catch (err) {
-    Alert.alert('Falha na autentificação', err.response.data.error);
+    showMessage({
+      message: 'Falha na autentificação',
+      description: err.response.data.error,
+      type: 'danger',
+    });
 
     yield put(signFailure());
   }
@@ -32,10 +36,18 @@ export function* signUp({ payload }) {
       email,
       password,
     });
-    Alert.alert('Sucesso', 'Dados cadastrados com sucesso');
+    showMessage({
+      message: 'Sucesso!',
+      description: 'Dados cadastrados com sucesso.',
+      type: 'success',
+    });
     onSucess();
   } catch (err) {
-    Alert.alert('Falha no cadastro', err.response.data.error);
+    showMessage({
+      message: 'Falha no cadastro',
+      description: err.response.data.error,
+      type: 'danger',
+    });
 
     yield put(signFailure());
   }
