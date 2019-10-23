@@ -4,6 +4,7 @@ import { REHYDRATE } from 'redux-persist/es/constants';
 import api from '~/services/api';
 import { signInSucess, signFailure } from './action';
 import { SIGN_IN_REQUEST, SIGN_UP_REQUEST } from './types';
+import { generateErrorMessage } from '~/services/errors';
 
 export function* signIn({ payload }) {
   try {
@@ -20,7 +21,7 @@ export function* signIn({ payload }) {
   } catch (err) {
     showMessage({
       message: 'Falha na autentificação',
-      description: err.response.data.error,
+      description: generateErrorMessage(err),
       type: 'danger',
     });
 
@@ -36,6 +37,7 @@ export function* signUp({ payload }) {
       email,
       password,
     });
+
     showMessage({
       message: 'Sucesso!',
       description: 'Dados cadastrados com sucesso.',
@@ -45,7 +47,7 @@ export function* signUp({ payload }) {
   } catch (err) {
     showMessage({
       message: 'Falha no cadastro',
-      description: err.response.data.error,
+      description: generateErrorMessage(err),
       type: 'danger',
     });
 

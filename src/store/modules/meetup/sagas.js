@@ -1,6 +1,7 @@
-import { Alert } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 import api from '~/services/api';
+import { generateErrorMessage } from '~/services/errors';
 import {
   subscribeFailure,
   subscribeSuccess,
@@ -14,12 +15,19 @@ export function* subscribeToMeetup({ payload }) {
     const { id } = payload;
     yield call(api.post, `meetups/${id}/subscriptions`);
 
-    Alert.alert('Inscrito!', 'Você se inscreveu no MeetUp com sucesso');
+    showMessage({
+      message: 'Inscrito!',
+      description: 'Você se inscreveu no MeetUp com sucesso.',
+      type: 'success',
+    });
 
     yield put(subscribeSuccess());
   } catch (err) {
-    console.tron.log(err.response.data.error);
-    Alert.alert('Falha ao se inscrever!', err.response.data.error);
+    showMessage({
+      message: 'Falha ao se inscrever!',
+      description: generateErrorMessage(err),
+      type: 'danger',
+    });
     yield put(subscribeFailure());
   }
 }
@@ -29,15 +37,20 @@ export function* unsubscribeToMeetup({ payload }) {
     const { id } = payload;
     yield call(api.delete, `subscriptions/${id}`);
 
-    Alert.alert('Desinscrito!', 'Você se desinscreveu no MeetUp com sucesso');
+    showMessage({
+      message: 'Desinscrito!',
+      description: 'Você se desinscreveu no MeetUp com sucesso.',
+      type: 'success',
+    });
 
     yield put(unsubscribeSuccess());
   } catch (err) {
-    const { error } = err.response.data;
-    Alert.alert(
-      'Falha ao se desinscrever!',
-      error && !error.message ? error : 'Ocorreu um erro ao se desinscrever!'
-    );
+    showMessage({
+      message: 'Falha ao se desinscrever!',
+      description: generateErrorMessage(err),
+      type: 'danger',
+    });
+
     yield put(unsubscribeFailure());
   }
 }

@@ -2,7 +2,6 @@ import React from 'react';
 
 import FlashMessage from 'react-native-flash-message';
 import { useSelector } from 'react-redux';
-import { SafeAreaView } from 'react-native';
 import createRouter from './routes';
 import Background from './components/Background';
 
