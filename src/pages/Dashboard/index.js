@@ -51,10 +51,8 @@ function Dashboard({ isFocused }) {
 
   async function whenDateChange() {
     if (isFocused) {
-      setRefresh(true);
       setMeetup([]);
       await fetchMeetups(1, true);
-      setRefresh(false);
     }
   }
 

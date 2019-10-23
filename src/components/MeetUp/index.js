@@ -14,10 +14,14 @@ export default function MeetUp({ item, buttonText, onPressButton, subscribe }) {
     User,
     File,
     canSubscribe,
-    isPast,
+    past,
   } = item;
   const { url } = File;
   const { name } = User;
+
+  function canRenderButton() {
+    return (!subscribe && !past) || canSubscribe;
+  }
 
   return (
     <Content>
@@ -36,7 +40,7 @@ export default function MeetUp({ item, buttonText, onPressButton, subscribe }) {
 
         <InfoTextIcon iconName="person">Organizador: {name}</InfoTextIcon>
 
-        {(!subscribe || canSubscribe) && !isPast && (
+        {canRenderButton() && (
           <Button onPress={onPressButton}>{buttonText}</Button>
         )}
       </InfoContent>
@@ -53,7 +57,7 @@ MeetUp.propTypes = {
     formattedDate: PropTypes.string,
     location: PropTypes.string,
     canSubscribe: PropTypes.bool,
-    isPast: PropTypes.bool,
+    past: PropTypes.bool,
     User: PropTypes.shape({
       name: PropTypes.string,
     }),
