@@ -32,8 +32,8 @@ export default function SignUp({ navigation }) {
       onPressLink={() => navigation.navigate('SignIn')}
     >
       <FormInput
+        autoCapitalize="words"
         autoCorrect={false}
-        autoCapitalize="none"
         placeholder="Nome completo"
         returnKeyType="next"
         onSubmitEditing={() => emailRef.current.focus()}

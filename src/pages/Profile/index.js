@@ -59,7 +59,7 @@ export default function Profile() {
         <Form>
           <FormInput
             autoCorrect={false}
-            autoCapitalize="none"
+            autoCapitalize="words"
             placeholder="Nome completo"
             returnKeyType="next"
             onSubmitEditing={() => emailRef.current.focus()}
