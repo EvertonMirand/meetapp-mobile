@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withNavigationFocus } from 'react-navigation';
 import { useDispatch } from 'react-redux';
+import { StatusBar } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Container, List, NoMeetup } from './styles';
@@ -13,6 +14,7 @@ import { loadMeetups } from '~/services/MeetupAPI';
 import DatePage from '~/components/DatePage';
 import { subscribeRequest } from '~/store/modules/meetup/actions';
 import FooterIndicator from '~/components/FooterIndicator';
+import Colors from '~/themes/Colors';
 
 function Dashboard({ isFocused }) {
   const dispatch = useDispatch();
@@ -54,6 +56,10 @@ function Dashboard({ isFocused }) {
       await fetchMeetups(1, true);
     }
   }
+
+  useEffect(() => {
+    StatusBar.setBackgroundColor(Colors.loggedStatusBar);
+  }, []);
 
   useEffect(() => {
     whenDateChange();

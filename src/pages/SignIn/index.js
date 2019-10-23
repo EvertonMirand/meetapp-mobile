@@ -1,4 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+
+import { StatusBar } from 'react-native';
 
 import PropTypes from 'prop-types';
 
@@ -7,6 +9,7 @@ import { FormInput } from './styles';
 import Button from '~/components/Button';
 import SignForm from '~/components/SignForm';
 import { signInRequest } from '~/store/modules/auth/action';
+import Colors from '~/themes/Colors';
 
 export default function SignIn({ navigation }) {
   const dispatch = useDispatch();
@@ -19,6 +22,10 @@ export default function SignIn({ navigation }) {
   function handleSubmit() {
     dispatch(signInRequest(email, password));
   }
+
+  useEffect(() => {
+    StatusBar.setBackgroundColor(Colors.backgroundPrimary);
+  }, []);
 
   return (
     <SignForm

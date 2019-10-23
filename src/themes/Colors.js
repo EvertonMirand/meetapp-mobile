@@ -1,5 +1,6 @@
 export default {
   backgroundPrimary: '#22202c',
+  loggedStatusBar: 'rgba(24, 22, 28, 1)',
   backgroundSecundary: '#402845',
   bootomBarBackground: '#2B1A2F',
   placeholder: 'rgba(255, 255, 255, 0.8)',
