@@ -2,6 +2,9 @@ import React, { useRef, useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { showMessage } from 'react-native-flash-message';
+
+import * as Yup from 'yup';
 import {
   Container,
   FormInput,
@@ -13,6 +16,31 @@ import {
 import Header from '~/components/Header';
 import { signOut } from '~/store/modules/auth/action';
 import { updateProfileRequest } from '~/store/modules/user/actions';
+
+const fieldWithOldPassword = (oldPassword, field, fieldMessage) =>
+  oldPassword
+    ? field
+        .min(6, 'A senha deve ser maior que 6 digitos')
+        .required(fieldMessage)
+    : field;
+
+const schema = Yup.object().shape({
+  name: Yup.string().required('O nome é obrigatorio.'),
+  email: Yup.string()
+    .email('Insira um e-mail válido')
+    .required('O e-mail é obrigatório'),
+  oldPassword: Yup.string(),
+  password: Yup.string().when('oldPassword', (oldPassword, field) =>
+    fieldWithOldPassword(oldPassword, field, 'A senha é obrigatória.')
+  ),
+  confirmPassword: Yup.string().when('oldPassword', (oldPassword, field) =>
+    fieldWithOldPassword(
+      oldPassword,
+      field,
+      'A confirmação da senha é obrigatória.'
+    )
+  ),
+});
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -36,6 +64,13 @@ export default function Profile() {
     dispatch(signOut());
   }
 
+  function validUpdateProfileData(data) {
+    setOldPassword('');
+    setPassword('');
+    setConfirmPassword('');
+    dispatch(updateProfileRequest(data));
+  }
+
   function handleUpdateProfile() {
     const data = {
       name,
@@ -44,11 +79,19 @@ export default function Profile() {
       password,
       confirmPassword,
     };
-
-    setOldPassword('');
-    setPassword('');
-    setConfirmPassword('');
-    dispatch(updateProfileRequest(data));
+    schema
+      .validate(data)
+      .then(() => {
+        validUpdateProfileData(data);
+      })
+      .catch(err => {
+        console.tron.log(err);
+        showMessage({
+          message: 'Dados invalidos!',
+          description: err.message,
+          type: 'danger',
+        });
+      });
   }
 
   return (
