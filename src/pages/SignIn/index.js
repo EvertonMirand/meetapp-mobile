@@ -1,15 +1,23 @@
 import React, { useRef, useState, useEffect } from 'react';
-
 import { StatusBar } from 'react-native';
 
 import PropTypes from 'prop-types';
-
 import { useDispatch, useSelector } from 'react-redux';
+import * as Yup from 'yup';
+import { showMessage } from 'react-native-flash-message';
+
 import { FormInput } from './styles';
 import Button from '~/components/Button';
 import SignForm from '~/components/SignForm';
 import { signInRequest } from '~/store/modules/auth/action';
 import Colors from '~/themes/Colors';
+
+const schema = Yup.object().shape({
+  password: Yup.string().required('A senha é obrigatória'),
+  email: Yup.string()
+    .email('Insira um e-mail válido')
+    .required('O e-mail é obrigatório'),
+});
 
 export default function SignIn({ navigation }) {
   const dispatch = useDispatch();
@@ -20,7 +28,21 @@ export default function SignIn({ navigation }) {
   const loading = useSelector(state => state.auth.loading);
 
   function handleSubmit() {
-    dispatch(signInRequest(email, password));
+    schema
+      .validate({
+        email,
+        password,
+      })
+      .then(() => {
+        dispatch(signInRequest(email, password));
+      })
+      .catch(err => {
+        showMessage({
+          message: 'Dados invalidos!',
+          description: err.message,
+          type: 'danger',
+        });
+      });
   }
 
   useEffect(() => {

@@ -1,10 +1,9 @@
 import React, { useRef, useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { showMessage } from 'react-native-flash-message';
-
 import * as Yup from 'yup';
+
 import {
   Container,
   FormInput,
@@ -25,14 +24,7 @@ const fieldWithOldPassword = (oldPassword, field, fieldMessage) =>
     : field;
 
 const schema = Yup.object().shape({
-  name: Yup.string().required('O nome é obrigatorio.'),
-  email: Yup.string()
-    .email('Insira um e-mail válido')
-    .required('O e-mail é obrigatório'),
   oldPassword: Yup.string(),
-  password: Yup.string().when('oldPassword', (oldPassword, field) =>
-    fieldWithOldPassword(oldPassword, field, 'A senha é obrigatória.')
-  ),
   confirmPassword: Yup.string().when('oldPassword', (oldPassword, field) =>
     fieldWithOldPassword(
       oldPassword,
@@ -40,6 +32,13 @@ const schema = Yup.object().shape({
       'A confirmação da senha é obrigatória.'
     )
   ),
+  password: Yup.string().when('oldPassword', (oldPassword, field) =>
+    fieldWithOldPassword(oldPassword, field, 'A senha é obrigatória.')
+  ),
+  email: Yup.string()
+    .email('Insira um e-mail válido')
+    .required('O e-mail é obrigatório'),
+  name: Yup.string().required('O nome é obrigatorio.'),
 });
 
 export default function Profile() {
