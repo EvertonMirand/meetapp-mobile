@@ -9,7 +9,7 @@ import { Container, List, NoSubscription } from './styles';
 import Header from '~/components/Header';
 
 import MeetUp from '~/components/MeetUp';
-import { loadSubscriptions } from '~/services/Meetup';
+import { loadSubscriptions } from '~/services/MeetupAPI';
 import FooterIndicator from '~/components/FooterIndicator';
 import { unsubscribeRequest } from '~/store/modules/meetup/actions';
 

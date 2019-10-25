@@ -10,7 +10,7 @@ import { Container, List, NoMeetup } from './styles';
 import Header from '~/components/Header';
 
 import MeetUp from '~/components/MeetUp';
-import { loadMeetups } from '~/services/Meetup';
+import { loadMeetups } from '~/services/MeetupAPI';
 import DatePage from '~/components/DatePage';
 import { subscribeRequest } from '~/store/modules/meetup/actions';
 import FooterIndicator from '~/components/FooterIndicator';
