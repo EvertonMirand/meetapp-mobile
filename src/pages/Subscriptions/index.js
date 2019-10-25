@@ -6,11 +6,10 @@ import { useDispatch } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Container, List, NoSubscription } from './styles';
-import Background from '~/components/Background';
 import Header from '~/components/Header';
 
 import MeetUp from '~/components/MeetUp';
-import { loadSubscriptions } from '~/services/MeetupAPI';
+import { loadSubscriptions } from '~/services/Meetup';
 import FooterIndicator from '~/components/FooterIndicator';
 import { unsubscribeRequest } from '~/store/modules/meetup/actions';
 
