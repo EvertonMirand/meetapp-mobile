@@ -58,10 +58,6 @@ function Dashboard({ isFocused }) {
   }
 
   useEffect(() => {
-    StatusBar.setBackgroundColor(Colors.loggedStatusBar);
-  }, []);
-
-  useEffect(() => {
     whenDateChange();
   }, [date, isFocused]); // eslint-disable-line
 
@@ -75,9 +71,22 @@ function Dashboard({ isFocused }) {
     setRefresh(false);
   }
 
-  async function subscribeToMeetup(id) {
-    await dispatch(subscribeRequest(id));
-    await whenDateChange();
+  function mapDateSubscribed(meetup, item) {
+    const canSubscribe = meetup.date !== item.date;
+    if (!meetup.canSubscribe) {
+      return meetup;
+    }
+
+    return {
+      ...meetup,
+      canSubscribe,
+    };
+  }
+
+  async function subscribeToMeetup(item) {
+    await Promise.all([dispatch(subscribeRequest(item.id))]).then(() => {
+      setMeetup(meetups.map(meetup => mapDateSubscribed(meetup, item)));
+    });
   }
 
   function onChangeDate(dateChanged) {
@@ -87,6 +96,10 @@ function Dashboard({ isFocused }) {
 
   return (
     <>
+      <StatusBar
+        backgroundColor={Colors.loggedStatusBar}
+        barStyle="light-content"
+      />
       <Header />
       <DatePage date={date} onChangeDate={onChangeDate} />
       <Container>
@@ -109,8 +122,8 @@ function Dashboard({ isFocused }) {
               subscribe
               buttonText="Realizar inscrição"
               item={item}
-              onPressButton={() => {
-                subscribeToMeetup(item.id);
+              onPressButton={async () => {
+                await subscribeToMeetup(item);
               }}
             />
           )}

@@ -45,15 +45,15 @@ export default function SignIn({ navigation }) {
       });
   }
 
-  useEffect(() => {
-    StatusBar.setBackgroundColor(Colors.backgroundPrimary);
-  }, []);
-
   return (
     <SignForm
       linkText="Criar conta grátis"
       onPressLink={() => navigation.navigate('SignUp')}
     >
+      <StatusBar
+        backgroundColor={Colors.backgroundPrimary}
+        barStyle="light-content"
+      />
       <FormInput
         keyboardType="email-address"
         autoCorrect={false}
